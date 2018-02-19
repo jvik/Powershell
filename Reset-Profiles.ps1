@@ -26,7 +26,7 @@ foreach ($user_item in $profile_list) {
         # Line below fixes problem.
         $registry_user_path = $registry_user_path -replace 'HKEY_LOCAL_MACHINE', 'HKLM:'
         $user_profile_path = Get-ItemPropertyValue -Path $registry_user_path -Name ProfileImagePath
-        Remove-Item -Path $user -recurse -Force | Out-file c:\temp\deleteprofiles.txt -Append
+        Remove-Item -Path $registry_user_path -recurse -Force | Out-file c:\temp\deleteprofiles.txt -Append
         Remove-Item -Path $user_profile_path -recurse -Force | Out-file c:\temp\deleteprofiles.txt -Append
         Write-Host Removed: $registry_user_path
         Write-host Removed: $user_profile_path
