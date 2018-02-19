@@ -18,9 +18,11 @@
   ./Reset-Profiles.ps1
 #>
 
+# Instanciating variables
 $profile_list = 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList'
 $registryarray = @()
 
+# Fetching profiles from registry and storing them in $registryarray
 foreach ($user_item in $profile_list) {
      $user_list = Get-ChildItem -Path $user_item
      foreach ($registry_user_path in $user_list) {
@@ -32,6 +34,7 @@ foreach ($user_item in $profile_list) {
      }    
 }
 
+# Deleting profiles
 foreach ($profile in $registryarray) {
   # Regex demands 3 digits in username to recreate profile. Use pattern of own choice.
   if ($profile.ProfilePath -match "\d{3}") {
