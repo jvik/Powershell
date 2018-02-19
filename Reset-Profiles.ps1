@@ -2,7 +2,8 @@
 .SYNOPSIS
   Renews all user profiles in Windows
 .DESCRIPTION
-  <Brief description of script>
+  Script helps out with removing corrupt local user profiles with pattern matching.
+  The script removes both profile folder in c:\users and registry key associated with the profile.
 .INPUTS
   None
 .OUTPUTS
