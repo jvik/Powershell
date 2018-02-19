@@ -18,7 +18,7 @@
   ./Reset-Profiles.ps1
 #>
 
-# Instanciating variables
+# Declaring variables
 $profile_list = 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList'
 $registryarray = @()
 
@@ -31,15 +31,15 @@ foreach ($user_item in $profile_list) {
         $registry_user_path = $registry_user_path -replace 'HKEY_LOCAL_MACHINE', 'HKLM:'
         $user_profile_path = Get-ItemPropertyValue -Path $registry_user_path -Name ProfileImagePath
         $registryarray += New-Object psobject -Property @{'RegistryPathName' = $registry_user_path; 'ProfilePath' = $user_profile_path}
-     }    
+      }    
 }
 
 # Deleting profiles
 foreach ($profile in $registryarray) {
   # Regex demands 3 digits in username to recreate profile. Use pattern of own choice.
   if ($profile.ProfilePath -match "\d{3}") {
-      Remove-Item -Path $profile.RegistryPathName -recurse -Force | Out-file c:\temp\deleteprofiles.txt -Append
-      Remove-Item -Path $profile.ProfilePath -recurse -Force | Out-file c:\temp\deleteprofiles.txt -Append
+      Remove-Item -Path $profile.RegistryPathName -recurse | Out-file c:\temp\deleteprofiles.txt -Append
+      Move-Item -Path $profile.ProfilePath -Destination c:\Users\old\ | Out-file c:\temp\deleteprofiles.txt -Append
       Write-Host Deleting: $profile.ProfilePath 
-    }
+  }
 }
