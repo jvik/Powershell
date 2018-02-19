@@ -36,6 +36,6 @@ foreach ($profile in $registryarray) {
   if ($profile.ProfilePath -match "\d{3}") {
       Remove-Item -Path $profile.RegistryPathName -recurse -Force | Out-file c:\temp\deleteprofiles.txt -Append
       Remove-Item -Path $profile.ProfilePath -recurse -Force | Out-file c:\temp\deleteprofiles.txt -Append
-      Write-Host Sletter: $profile.ProfilePath 
+      Write-Host Deleting: $profile.ProfilePath 
     }
 }
