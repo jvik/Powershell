@@ -39,7 +39,8 @@ foreach ($profile in $registryarray) {
   # Regex demands 3 digits in username to recreate profile. Use pattern of own choice.
   if ($profile.ProfilePath -match "\d{3}") {
       Remove-Item -Path $profile.RegistryPathName -recurse | Out-file c:\temp\deleteprofiles.txt -Append
-      Move-Item -Path $profile.ProfilePath -Destination c:\Users\old\ | Out-file c:\temp\deleteprofiles.txt -Append
+      New-Item -Path "c:\Users\old\$($profile.ProfilePath.Substring($profile.ProfilePath.LastIndexOf('\')+1))" -ItemType Directory -Force
+      Move-Item -Path $profile.ProfilePath -Destination "c:\Users\old\$($profile.ProfilePath.Substring($profile.ProfilePath.LastIndexOf('\')+1))" | Out-file c:\temp\deleteprofiles.txt -Append
       Write-Host Deleting: $profile.ProfilePath 
   }
 }
